@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>零跑C系列 · 近期热点结合分析</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; background: #f5f5f7; color: #1d1d1f; line-height: 1.7; }
+  header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 48px 40px 36px; }
+  header .badge { display: inline-block; background: #ff4d6d; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 1px; }
+  header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  header p { font-size: 14px; opacity: 0.75; }
+  .meta { display: flex; gap: 24px; margin-top: 16px; font-size: 13px; opacity: 0.65; }
+  main { max-width: 900px; margin: 36px auto; padding: 0 20px 60px; }
+  .intro { background: #fff; border-radius: 14px; padding: 20px 24px; margin-bottom: 28px; border-left: 4px solid #ff4d6d; font-size: 14px; color: #555; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+  .intro strong { color: #1d1d1f; }
+  .card { background: #fff; border-radius: 16px; margin-bottom: 28px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.07); transition: box-shadow .2s; }
+  .card:hover { box-shadow: 0 6px 28px rgba(0,0,0,.13); }
+  .card-header { display: flex; align-items: center; gap: 16px; padding: 22px 26px 18px; border-bottom: 1px solid #f0f0f0; }
+  .rank { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0; }
+  .rank-1 { background: #fff3cd; color: #c8960c; }
+  .rank-2 { background: #e8f5e9; color: #2e7d32; }
+  .rank-3 { background: #e3f2fd; color: #1565c0; }
+  .rank-4 { background: #fce4ec; color: #c62828; }
+  .rank-5 { background: #ede7f6; color: #4527a0; }
+  .card-title { flex: 1; }
+  .card-title h2 { font-size: 18px; font-weight: 700; }
+  .card-title .tags { margin-top: 5px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #f0f0f5; color: #666; }
+  .tag.hot { background: #fff0f3; color: #ff4d6d; }
+  .tag.new { background: #e8f5e9; color: #2e7d32; }
+  .card-body { padding: 20px 26px; }
+  .section { margin-bottom: 18px; }
+  .section-label { font-size: 12px; font-weight: 600; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .section p, .section li { font-size: 14px; color: #444; }
+  .section ul { padding-left: 18px; }
+  .section li { margin-bottom: 4px; }
+  .links-grid { display: flex; flex-direction: column; gap: 8px; }
+  .link-item { display: flex; align-items: flex-start; gap: 10px; background: #f9f9fb; border-radius: 8px; padding: 10px 14px; }
+  .link-item .link-type { font-size: 11px; background: #e8eaf6; color: #3949ab; padding: 2px 7px; border-radius: 5px; flex-shrink: 0; margin-top: 1px; }
+  .link-item a { font-size: 13px; color: #0066cc; text-decoration: none; word-break: break-all; }
+  .link-item a:hover { text-decoration: underline; }
+  .link-item .link-desc { font-size: 12px; color: #888; margin-top: 2px; }
+  .suggest-box { background: linear-gradient(135deg, #fff8f0, #fff); border: 1px solid #ffd5a8; border-radius: 10px; padding: 14px 18px; }
+  .suggest-box p { font-size: 14px; color: #333; }
+  .suggest-box strong { color: #e65c00; }
+  .signal-bar { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .signal-pill { font-size: 12px; padding: 3px 10px; border-radius: 12px; background: #f0f4ff; color: #3b5bdb; border: 1px solid #dde2ff; }
+  footer { text-align: center; padding: 24px; font-size: 12px; color: #aaa; }
+  .notice { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #92400e; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">MONTHLY REVIEW · 热点模块</div>
+  <h1>零跑C系列达人投放 · 近期热点结合分析</h1>
+  <p>聚焦小红书 / 抖音汽车垂类热点，结合6月C系新车上市节点</p>
+  <div class="meta">
+    <span>📅 分析周期：2026年4月下旬 – 5月下旬</span>
+    <span>🎯 车型：C10 / C11 / C16</span>
+    <span>📊 平台：小红书 + 抖音</span>
+  </div>
+</header>
+
+<main>
+
+  <div class="notice">
+    ⚠️ 链接为小红书话题 / 搜索页入口，具体代表性帖子请通过关键词人工截图取证。
+  </div>
+
+  <!-- 热点 1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="rank rank-1">1</div>
+      <div class="card-title">
+        <h2>#提车vlog · 交付季冲榜</h2>
+        <div class="tags">
+          <span class="tag hot">🔥 结合度最高</span>
+          <span class="tag new">6月交付节点</span>
+          <span class="tag">视频 / 图文双格式</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="section">
+        <div class="section-label">简介</div>
+        <p>「提车vlog」是小红书汽车类长期热点话题，每逢季末交付高峰（3月、6月、9月、12月）搜索量与发布量同步爆发。2026年Q2交付季叠加零跑C系新款到店，该话题正处上升期，用户对「真实提车体验」「等待排队」「开箱验车」的真实感内容接受度高、转化意愿强。</p>
+      </div>
+      <div class="section">
+        <div class="section-label">参考链接（话题入口）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">话题页</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%8F%90%E8%BD%A6vlog" target="_blank">小红书搜索「提车vlog」</a>
+              <div class="link-desc">持续高热，近30天新增笔记数量可作为基准参考</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">截图示意（供人工截图）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%9B%B6%E8%B7%91%E6%8F%90%E8%BD%A6vlog" target="_blank">小红书搜索「零跑提车vlog」</a>
+              <div class="link-desc">C10/C16提车笔记聚合，可截取点赞前5名</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%8F%90%E8%BD%A6vlog+%E6%96%B0%E8%83%BD%E6%BA%90" target="_blank">小红书搜索「提车vlog 新能源」</a>
+              <div class="link-desc">新能源提车场景，包含零跑竞品对比参考</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%8F%90%E8%BD%A6%E7%8E%B0%E5%9C%BA+2026" target="_blank">小红书搜索「提车现场 2026」</a>
+              <div class="link-desc">交付现场真实感内容，情绪共鸣强</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">结合建议</div>
+        <div class="suggest-box">
+          <p>投放主轴：<strong>招募C10/C16车主拍「6月交付vlog」</strong>，聚焦「等了多久→终于到手」的情绪弧线，后半段自然植入座舱体验、空间展示；发布时间卡在6月第2-3周交付集中期，搭配品牌话题 <strong>#零跑C10提车</strong>，借势话题自然流量。</p>
+          <div class="signal-bar">
+            <span class="signal-pill">情绪锚点：终于等到</span>
+            <span class="signal-pill">场景：家庭/情侣提车</span>
+            <span class="signal-pill">时机：6月交付季</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热点 2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="rank rank-2">2</div>
+      <div class="card-title">
+        <h2>#人生第一辆车 · 新能源首购热潮</h2>
+        <div class="tags">
+          <span class="tag hot">🔥 高转化</span>
+          <span class="tag">情感向</span>
+          <span class="tag">Z世代</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="section">
+        <div class="section-label">简介</div>
+        <p>「人生第一辆车」是小红书2024-2025年增速最快的汽车话题之一，核心受众是25-35岁购买首台车的年轻人。叠加当前新能源普及率提升与「以旧换新」补贴政策，大量用户将首购目标锁定在15万以内纯电/增程SUV，与C10定价高度吻合。</p>
+      </div>
+      <div class="section">
+        <div class="section-label">参考链接（话题入口）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">话题页</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E4%BA%BA%E7%94%9F%E7%AC%AC%E4%B8%80%E8%BE%86%E8%BD%A6" target="_blank">小红书搜索「人生第一辆车」</a>
+              <div class="link-desc">每月新增笔记稳定在10万+，常年Top话题</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">截图示意（供人工截图）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E4%BA%BA%E7%94%9F%E7%AC%AC%E4%B8%80%E8%BE%86%E8%BD%A6+%E9%9B%B6%E8%B7%91" target="_blank">小红书搜索「人生第一辆车 零跑」</a>
+              <div class="link-desc">直接品牌结合，截取真实车主首购分享</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E4%BA%BA%E7%94%9F%E7%AC%AC%E4%B8%80%E8%BE%86%E8%BD%A6+15%E4%B8%87" target="_blank">小红书搜索「人生第一辆车 15万」</a>
+              <div class="link-desc">C10价格带精准受众，竞品格局清晰</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%A5%B3%E7%94%9F%E7%AC%AC%E4%B8%80%E8%BE%86%E8%BD%A6" target="_blank">小红书搜索「女生第一辆车」</a>
+              <div class="link-desc">女性首购视角，高互动率，适合情感向脚本</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">结合建议</div>
+        <div class="suggest-box">
+          <p>脚本方向：以<strong>「预算15万、家用空间大、第一辆车不踩坑」</strong>为切入点，达人讲述自己选车过程中为何最终选C10，重点突出性价比与智能座舱「给新手友好」的设定；适合女性/新手车主类达人操盘。</p>
+          <div class="signal-bar">
+            <span class="signal-pill">价格锚点：15万内</span>
+            <span class="signal-pill">受众：首购新手</span>
+            <span class="signal-pill">达人类型：生活/女性</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热点 3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="rank rank-3">3</div>
+      <div class="card-title">
+        <h2>#家用SUV选车攻略 · 618汽车补贴叠加</h2>
+        <div class="tags">
+          <span class="tag hot">🔥 618节点</span>
+          <span class="tag">对比测评</span>
+          <span class="tag">决策向</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="section">
+        <div class="section-label">简介</div>
+        <p>618购物节汽车品类流量每年5月底至6月中旬大幅提升，「家用SUV怎么选」「油车还是电车」等决策类内容搜索量环比增长约40%。C10/C16定位家用5座/7座，与「家庭用车」「带娃出行」「亲子出游」等搜索场景高度契合，是该热点的强势竞争者。</p>
+      </div>
+      <div class="section">
+        <div class="section-label">参考链接（话题入口）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">话题页</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%AE%B6%E7%94%A8SUV%E6%80%8E%E4%B9%88%E9%80%89" target="_blank">小红书搜索「家用SUV怎么选」</a>
+              <div class="link-desc">618前流量高峰，C10/C16在价格段有明显优势</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">截图示意（供人工截图）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%9B%B6%E8%B7%91C10+%E5%AF%B9%E6%AF%94" target="_blank">小红书搜索「零跑C10 对比」</a>
+              <div class="link-desc">竞品对比类笔记，可截取「C10 vs 宋L」「C10 vs 海豹U」等内容</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%9B%B6%E8%B7%91C16+%E5%AE%B6%E7%94%A8" target="_blank">小红书搜索「零跑C16 家用」</a>
+              <div class="link-desc">C16七座家用场景内容，大空间卖点自然植入</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=618%E6%B1%BD%E8%BD%A6%E4%BC%98%E6%83%A0+%E6%96%B0%E8%83%BD%E6%BA%90" target="_blank">小红书搜索「618汽车优惠 新能源」</a>
+              <div class="link-desc">618节点专属流量，截取热度最高的促销类笔记</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">结合建议</div>
+        <div class="suggest-box">
+          <p>内容形式：<strong>「选车避坑清单」图文+短视频双发</strong>，以「家庭预算X万，孩子还小要空间大」为场景锁定受众，C系空间（C16三排）、座舱大屏操控作为差异化点植入；618节点可叠加「限时权益」钩子提升转化。</p>
+          <div class="signal-bar">
+            <span class="signal-pill">场景：带娃家庭</span>
+            <span class="signal-pill">节点：618优惠</span>
+            <span class="signal-pill">卖点：空间+性价比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热点 4 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="rank rank-4">4</div>
+      <div class="card-title">
+        <h2>#智能座舱体验 · 大屏车机测评</h2>
+        <div class="tags">
+          <span class="tag">测评向</span>
+          <span class="tag">科技感</span>
+          <span class="tag">男性受众</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="section">
+        <div class="section-label">简介</div>
+        <p>智能座舱相关内容在2025年持续升温，「车机好不好用」「导航/语音/CarPlay兼容」成为新能源选车必考项。零跑C系搭载的高通骁龙座舱芯片+大尺寸中控在同价位中具备竞争力，可借助该热点做深度体验类内容，覆盖对科技配置敏感的理性型买家。</p>
+      </div>
+      <div class="section">
+        <div class="section-label">参考链接（话题入口）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">话题页</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%99%BA%E8%83%BD%E5%BA%A7%E8%88%B1%E4%BD%93%E9%AA%8C" target="_blank">小红书搜索「智能座舱体验」</a>
+              <div class="link-desc">科技测评类高互动话题，适合横评内容截图取证</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">截图示意（供人工截图）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E9%9B%B6%E8%B7%91C10+%E8%BD%A6%E6%9C%BA%E5%A5%BD%E7%94%A8%E5%90%97" target="_blank">小红书搜索「零跑C10 车机好用吗」</a>
+              <div class="link-desc">真实用车反馈，可截取OTA升级后好评内容</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%96%B0%E8%83%BD%E6%BA%90%E8%BD%A6%E6%9C%BA%E6%8E%A8%E8%8D%90+2026" target="_blank">小红书搜索「新能源车机推荐 2026」</a>
+              <div class="link-desc">当年度最新横评，C系可在对比中展现优势</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E8%BD%A6%E6%9C%BA%E5%A4%A7%E5%B1%8F+%E6%9C%80%E5%A5%BD%E7%94%A8" target="_blank">小红书搜索「车机大屏 最好用」</a>
+              <div class="link-desc">用户主动推荐类内容，口碑植入参考</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">结合建议</div>
+        <div class="suggest-box">
+          <p>找<strong>数码/科技类达人</strong>做「新能源车机横评」，将C10座舱列为参赛选手，通过公正测评视角自然胜出；避免纯品宣口吻，重点展示<strong>语音控制、OTA更新频次、CarPlay/HiCar连接流畅度</strong>等实用场景。</p>
+          <div class="signal-bar">
+            <span class="signal-pill">达人类型：数码/科技</span>
+            <span class="signal-pill">内容形式：横评</span>
+            <span class="signal-pill">卖点：座舱芯片</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 热点 5 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="rank rank-5">5</div>
+      <div class="card-title">
+        <h2>#情侣/家庭提车 · 生活仪式感场景</h2>
+        <div class="tags">
+          <span class="tag">场景化</span>
+          <span class="tag">情感共鸣</span>
+          <span class="tag">泛受众</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="section">
+        <div class="section-label">简介</div>
+        <p>「一起去提车」「带爸妈看新车」「结婚第一辆车」等场景化提车内容在小红书持续高热，核心在于「仪式感」与「情感共鸣」驱动的大范围扩散。这类内容传播效率高、品牌露出自然，不依赖硬广逻辑，适合零跑C系做温情向品牌口碑积累。</p>
+      </div>
+      <div class="section">
+        <div class="section-label">参考链接（话题入口）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">话题页</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E6%83%85%E4%BE%A3%E6%8F%90%E8%BD%A6" target="_blank">小红书搜索「情侣提车」</a>
+              <div class="link-desc">情感向传播爆款高产话题，适合6月浪漫仪式感节点</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">截图示意（供人工截图）</div>
+        <div class="links-grid">
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%B8%A6%E5%A6%88%E5%A6%88%E6%8F%90%E8%BD%A6" target="_blank">小红书搜索「带妈妈提车」</a>
+              <div class="link-desc">亲情场景，C16大空间+家庭出行场景天然契合</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E7%BB%93%E5%A9%9A%E7%AC%AC%E4%B8%80%E8%BE%86%E8%BD%A6" target="_blank">小红书搜索「结婚第一辆车」</a>
+              <div class="link-desc">婚车/结婚用车场景，高传播仪式感内容参考</div>
+            </div>
+          </div>
+          <div class="link-item">
+            <span class="link-type">搜索</span>
+            <div>
+              <a href="https://www.xiaohongshu.com/search_result?keyword=%E5%AE%B6%E5%BA%AD%E6%8F%90%E8%BD%A6+%E4%BB%AA%E5%BC%8F%E6%84%9F" target="_blank">小红书搜索「家庭提车 仪式感」</a>
+              <div class="link-desc">温情向内容的典型爆款结构，可直接参考脚本框架</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-label">结合建议</div>
+        <div class="suggest-box">
+          <p>内容策略：<strong>招募真实家庭或情侣KOC</strong>，拍摄「领取零跑C16，全家出发露营」等场景化vlog，弱化产品参数，强化<strong>「这辆车装下了我们一家人的故事」</strong>情感主线；6月父亲节（6月15日）前后发布效果最佳。</p>
+          <div class="signal-bar">
+            <span class="signal-pill">达人类型：家庭/亲子/情侣</span>
+            <span class="signal-pill">节点：6月父亲节</span>
+            <span class="signal-pill">卖点：大空间+家用</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<footer>零跑汽车 · 达人投放复盘报告 · 热点模块 · 2026年5月</footer>
+</body>
+</html>
