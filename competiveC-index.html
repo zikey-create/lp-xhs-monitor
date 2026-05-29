@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>零跑 C16 / C11 / C10 · 品牌层面 — 小红书拉踩统计</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f4f5f7; color: #1a1a2e; font-size: 13px; }
+
+  header { background: #e94060; color: #fff; padding: 20px 28px 16px; }
+  header h1 { font-size: 20px; font-weight: 700; letter-spacing: .5px; }
+  header p  { font-size: 12px; opacity: .85; margin-top: 4px; }
+
+  .notice {
+    margin: 16px 20px 0;
+    background: #fff8e1;
+    border-left: 4px solid #f59e0b;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .notice strong { color: #d97706; }
+
+  .section { margin: 20px 20px 0; }
+  .section-title {
+    font-size: 14px; font-weight: 700; padding: 10px 14px;
+    border-radius: 8px 8px 0 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .model-c16 .section-title { background: #3b82f6; color: #fff; }
+  .model-c11 .section-title { background: #8b5cf6; color: #fff; }
+  .model-c10 .section-title { background: #06b6d4; color: #fff; }
+  .model-brand .section-title { background: #e94060; color: #fff; }
+
+  .badge { display: inline-block; background: rgba(255,255,255,.25); border-radius: 12px; padding: 2px 10px; font-size: 11px; }
+  .badge-count { display: inline-block; background: rgba(255,255,255,.35); border-radius: 12px; padding: 2px 10px; font-size: 11px; margin-left: 4px; }
+
+  .table-wrap { overflow-x: auto; background: #fff; border-radius: 0 0 8px 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: #f8fafc; padding: 9px 10px; text-align: left;
+    font-size: 12px; color: #64748b; font-weight: 600;
+    border-bottom: 2px solid #e2e8f0; white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #f1f5f9; transition: background .15s; }
+  tbody tr:hover { background: #f8fafc; }
+  tbody td { padding: 9px 10px; vertical-align: top; line-height: 1.5; }
+
+  .status-pending  { color: #f59e0b; font-weight: 600; }
+  .status-done     { color: #10b981; font-weight: 600; }
+
+  .competitor-chip {
+    display: inline-block; background: #fee2e2; color: #dc2626;
+    border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 500;
+    margin: 1px 2px 1px 0;
+  }
+  .competitor-chip-neg {
+    display: inline-block; background: #fef3c7; color: #d97706;
+    border-radius: 4px; padding: 2px 7px; font-size: 11px; font-weight: 500;
+    margin: 1px 2px 1px 0;
+  }
+  .link-btn {
+    display: inline-block; background: #e94060; color: #fff;
+    border-radius: 4px; padding: 2px 8px; font-size: 11px; text-decoration: none;
+    white-space: nowrap;
+  }
+  .link-btn:hover { background: #c73050; }
+
+  .engage-high { color: #10b981; font-weight: 700; }
+  .engage-mid  { color: #f59e0b; font-weight: 600; }
+  .engage-low  { color: #94a3b8; }
+
+  .row-weibo td { background: #f0fdf4 !important; }
+  .row-weibo:hover td { background: #dcfce7 !important; }
+  .tag-platform {
+    display: inline-block; border-radius: 4px; padding: 1px 6px;
+    font-size: 11px; font-weight: 600; margin-right: 3px;
+  }
+  .tag-xhs  { background: #fde8ec; color: #e94060; }
+  .tag-weibo { background: #fce7f3; color: #be185d; }
+
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 20px; font-size: 11.5px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-green { background: #10b981; }
+  .dot-red   { background: #e94060; }
+
+  .stats-bar { display: flex; gap: 10px; flex-wrap: wrap; margin: 16px 20px 0; }
+  .stat-card { background: #fff; border-radius: 8px; padding: 12px 16px; min-width: 120px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+  .stat-card .num { font-size: 22px; font-weight: 700; color: #e94060; }
+  .stat-card .label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  .note { font-size: 11px; color: #94a3b8; font-style: italic; }
+
+  footer { margin: 24px 20px 40px; font-size: 11px; color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>零跑 C16 / C11 / C10 · 品牌层面 — 小红书拉踩统计</h1>
+  <p>发布平台：小红书（含微博跨平台参考）&nbsp;|&nbsp; 生成日期：2026-05-28 &nbsp;|&nbsp; 数据来源：小红书MCP实时搜索</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="num">9</div>
+    <div class="label">C16 已监测条目</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">9</div>
+    <div class="label">C11 已监测条目</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">5</div>
+    <div class="label">C10 已监测条目</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">5</div>
+    <div class="label">品牌层面已监测</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" style="color:#10b981">28</div>
+    <div class="label">合计已录入条目</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" style="color:#f59e0b">2843</div>
+    <div class="label">单条最高互动量</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="dot dot-green"></span> 互动 ≥500 高热内容</div>
+  <div class="legend-item"><span class="dot dot-red"></span> 负面/踩零跑内容</div>
+  <div class="legend-item"><span style="background:#f0fdf4;padding:1px 8px;border-radius:4px;font-size:11px">绿底</span> 微博跨平台参考</div>
+</div>
+
+<!-- ==================== C16 ==================== -->
+<div class="section model-c16">
+  <div class="section-title">
+    零跑 C16
+    <span class="badge">六座大型 SUV · 15.58万起</span>
+    <span class="badge-count">已录 9 条</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>发布平台</th>
+          <th>对应车型</th>
+          <th>触发竞品</th>
+          <th>媒体名称</th>
+          <th>账号粉丝量</th>
+          <th>原文链接</th>
+          <th>发布时间</th>
+          <th>互动数据量</th>
+          <th>目前处理进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L6</span></td>
+          <td>polaris</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/69b16d4b000000000600a7ff?xsec_token=ABQYF64nR55p0aZCupQn_am_rXqLKNYgiy5dQ9BxPedWo=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞345 评622 藏173</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L6</span></td>
+          <td>汽车研究院</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6877544a0000000012032130?xsec_token=AB3G6u6_r9ILbSg3vvV1RJyoU_c7nJzQ5Qa40zeTPmGzA=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞589 评140 藏225</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L9</span><br><span class="note">偶遇对比向</span></td>
+          <td>Unique.</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6869527c0000000012016dfa?xsec_token=ABitoSvv5FSXCO7MSdsrktK3MPIIPas0NrGQmJUONlUiA=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞535 评708 藏84</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L6</span></td>
+          <td>鸭子头头</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/670153e7000000001a021b2c?xsec_token=ABp7s4JxkoBjMBh_yGWkRCoqiBXu7CgUZIbJQUPzEO7FA=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞130 评827 藏15</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L6</span></td>
+          <td>一口小杏运</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/692966e4000000000d00f4e7?xsec_token=ABouGS_ksLsOw2Pf0odSZil1BmC3KH2CRhlSUGETSm2A8=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞66 评424 藏17</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">理想L6</span></td>
+          <td>小鱼泡泡糖</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68f619c3000000000301b42d?xsec_token=AB11mX9yLJPOumdnVCuyazRveyBmDR83zpeZ73V2rbBgI=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞200 评41 藏43</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">问界M7</span></td>
+          <td>小王说车</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/667fbfb8000000001d01900f?xsec_token=ABGk7bFb34G00XGMcf1m1xI4UbL4MsuyPrV8rVXpp7jhk=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞79 评6 藏17</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">问界M7</span></td>
+          <td>阿科</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68a4323b000000001c03d404?xsec_token=ABwzehYiWSsDZoxCCsrBE9OEwTdNh3Sc_B0i4XV6qxBpw=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞9 评0 藏1</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C16</td>
+          <td><span class="competitor-chip">小鹏</span><br><span class="note">零跑vs小鹏品牌向</span></td>
+          <td>午午的车</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6852c428000000001202e1fb?xsec_token=ABqh-aIi6pH3HlKCg9KarlCyy2oF2sfmZoUt-DwMvCA3Q=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞135 评6 藏9</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== C11 ==================== -->
+<div class="section model-c11" style="margin-top:20px">
+  <div class="section-title">
+    零跑 C11
+    <span class="badge">中大型 SUV</span>
+    <span class="badge-count">已录 9 条(小红书) + 1 条微博参考</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>发布平台</th>
+          <th>对应车型</th>
+          <th>触发竞品</th>
+          <th>媒体名称</th>
+          <th>账号粉丝量</th>
+          <th>原文链接</th>
+          <th>发布时间</th>
+          <th>互动数据量</th>
+          <th>目前处理进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 微博参考 -->
+        <tr class="row-weibo">
+          <td><span style="color:#10b981;font-weight:700">★</span></td>
+          <td><span class="tag-platform tag-weibo">微博</span><br><small style="color:#94a3b8">跨平台参考</small></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>琪车人-</td>
+          <td>68.4w</td>
+          <td><a class="link-btn" href="https://video.weibo.com/show?fid=1034:5215140010983473" target="_blank">查看</a></td>
+          <td>2025-09-26</td>
+          <td>14</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <!-- 小红书实测数据 -->
+        <tr>
+          <td>1</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>往事随风</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68d3ddc300000000120228d1?xsec_token=ABcqEVcP3my_k6uidUzl-K4AZYlfaJa8NvwgM8j-P3BBo=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞601 评18 藏38</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>cheney</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/679388c1000000002900e6f3?xsec_token=AB_JMnyCvvBaD3AbCyizk4qTZLcXxAJ2wNPKXx6U8yIbs=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞236 评291 藏87</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>深藏blue</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6a01bf7a000000003502686d?xsec_token=ABvJvK28_TcXiqhb533_YiVRDfADci_G3szkQsTfrNwAw=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞95 评274 藏29</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>我妈是朵朵</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/69205e60000000001e022388?xsec_token=ABiY83672Yt0OlEzkodZjoKIVrV7uuxJQeOOImatuREWo=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞57 评144 藏29</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">深蓝S07</span></td>
+          <td>螺丝刀</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/66ed8b210000000012013e2b?xsec_token=AB2M3HKbLw6SOTKsXhvRwi0DwnzYJHI6M2-QgX5_kwB3c=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞108 评23 藏51</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">小鹏G6</span></td>
+          <td>电动星球News</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/686fbbaf0000000017035807?xsec_token=ABB5haaqwCvzzXTF2Dz6m96n5MfXI-Kdfb3eTjA31Rk8s=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞160 评20 藏122</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">小鹏G6</span></td>
+          <td>一梵开车</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/691c00e8000000001e0003fc?xsec_token=ABDTBVXUxJXo3r6eYtjKaR0ej0mx8rYFT6q2BbELNLHLs=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞198 评71 藏57</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">小鹏G6</span></td>
+          <td>汽车人~龘伟</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68d5d319000000000e031c29?xsec_token=ABU3ZOUvEmIfuc8NgysrAoQvGTliOf-7rzBFF5EDGWmKs=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞120 评53 藏79</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C11</td>
+          <td><span class="competitor-chip">比亚迪宋L</span></td>
+          <td>车圈真卷</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6669be47000000000e03388c?xsec_token=ABipe2e1poIYoGlDwUPDjmPsC-c_5fnoFn4dsNaNw6N_E=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞24 评2 藏15</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== C10 ==================== -->
+<div class="section model-c10" style="margin-top:20px">
+  <div class="section-title">
+    零跑 C10
+    <span class="badge">紧凑型 SUV</span>
+    <span class="badge-count">已录 5 条(小红书) + 1 条微博参考</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>发布平台</th>
+          <th>对应车型</th>
+          <th>触发竞品</th>
+          <th>媒体名称</th>
+          <th>账号粉丝量</th>
+          <th>原文链接</th>
+          <th>发布时间</th>
+          <th>互动数据量</th>
+          <th>目前处理进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 微博参考 -->
+        <tr class="row-weibo">
+          <td><span style="color:#10b981;font-weight:700">★</span></td>
+          <td><span class="tag-platform tag-weibo">微博</span><br><small style="color:#94a3b8">跨平台参考</small></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>汽车头</td>
+          <td>96.6w</td>
+          <td><a class="link-btn" href="https://weibo.com/1645504501/QuA3aF3i2" target="_blank">查看</a></td>
+          <td>2026-03-04</td>
+          <td>5</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <!-- 小红书实测数据 -->
+        <tr>
+          <td>1</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>喬治</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/69b14b58000000002800a2ec?xsec_token=ABQYF64nR55p0aZCupQn_am1fo5-jP1pKf4vRSsvNRTcI=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞103 评15 藏46</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>一碗芝麻胡</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/69e72f32000000001a0347a5?xsec_token=ABjP_cpFxhWvyrdFiZl_NhC6LystVArx_aoNN_B-FPYY8=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞26 评163 藏13</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>小秋山</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6986fd8f000000001d012557?xsec_token=AByJoSTCGArkWt1guiV2JQs8Ar8uexFTSxo5I4o-eSTV0=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞24 评106 藏14</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>zi</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68c62936000000001b03e414?xsec_token=ABsbXr52x2SGqzh7GOB3VCELNv-hQ_km7xmqRCgHvwvPg=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞18 评71 藏10</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>C10</td>
+          <td><span class="competitor-chip">深蓝S05</span></td>
+          <td>小飞de评测</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6752a477000000000202c9f8?xsec_token=ABAl4gXlDOupr6vEx03xEEkGl7nd7MvHLb9FZVPCoa0-E=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞28 评25 藏4</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 品牌层面 ==================== -->
+<div class="section model-brand" style="margin-top:20px; margin-bottom:20px">
+  <div class="section-title">
+    零跑品牌层面
+    <span class="badge">口碑舆情监测</span>
+    <span class="badge-count">已录 5 条</span>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>发布平台</th>
+          <th>对应车型</th>
+          <th>触发竞品 / 话题</th>
+          <th>媒体名称</th>
+          <th>账号粉丝量</th>
+          <th>原文链接</th>
+          <th>发布时间</th>
+          <th>互动数据量</th>
+          <th>目前处理进度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>品牌层面</td>
+          <td><span class="competitor-chip-neg">零跑为什么便宜</span><br><span class="note">对标比亚迪品牌口碑</span></td>
+          <td>电车指南</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/69da59f5000000001f0074f7?xsec_token=ABTnnuacjVtOx1otSvUGSZE6xzsKkGb0xJuapSMnuR3OA=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high" style="color:#e94060">赞1620 评609 藏614</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>品牌层面</td>
+          <td><span class="competitor-chip-neg">零跑内部现状</span><br><span class="note">品牌质疑向</span></td>
+          <td>大厂料姐</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6a0001ac0000000037036bf0?xsec_token=ABMLWLm9P14-0K5WxwrxZq_llpWV2pmmmOi6FwqLjOHdQ=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-high">赞214 评200 藏71</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>品牌层面</td>
+          <td><span class="competitor-chip-neg">劝退零跑</span><br><span class="note">负面舆情向</span></td>
+          <td>小雪的中间世界</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/682c4a2f000000002001dcdb?xsec_token=ABFexhPT6MvX90sHI19AZ3G2zr7SNDqduq0UvJbgyMGKM=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞107 评195 藏47</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>品牌层面</td>
+          <td><span class="competitor-chip-neg">零跑声明事件</span><br><span class="note">品牌舆情回应</span></td>
+          <td>电车指南</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/68d77596000000000e00f70c?xsec_token=AB2wxDs2fH31GeVi4ogzZPpn-ftMknzFhRxBJibpPjAo4=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-mid">赞238 评36 藏18</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="tag-platform tag-xhs">小红书</span></td>
+          <td>品牌层面</td>
+          <td><span class="competitor-chip">比亚迪</span><br><span class="note">零跑最狠SUV让比亚迪慌了</span></td>
+          <td>观辙</td>
+          <td>—</td>
+          <td><a class="link-btn" href="https://www.xiaohongshu.com/explore/6a13eb6c0000000035020b1f?xsec_token=AB2bQivSbqfrkKDaPiaLAsLTGE2Mn5II-8zywOhwMTLbU=" target="_blank">查看</a></td>
+          <td>—</td>
+          <td class="engage-low">赞24 评30 藏14</td>
+          <td class="status-pending">待处理</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 说明 -->
+<div class="notice" style="margin: 0 20px 20px;">
+  <strong>📋 数据说明：</strong>
+  <ul style="margin-top: 8px; padding-left: 18px; line-height: 2;">
+    <li><b>互动数据量</b> = 点赞数 + 评论数 + 收藏数，通过小红书MCP实时搜索获取</li>
+    <li><b>账号粉丝量 / 发布时间</b> 搜索接口暂未返回，需点开原文链接后手动补全</li>
+    <li><b>C10 竞品</b>：海豹U / 元PLUS 方向搜索结果较少，主战场为 深蓝S05 vs C10</li>
+    <li><b>C16 竞品</b>：小鹏X9 / 岚图FREE 直接对比内容极少，主要拉踩集中在 理想L6 / 问界M7</li>
+    <li><b>品牌层面</b>：口碑质疑类内容以"零跑为什么便宜"（1620赞）为最高热度，需重点关注</li>
+  </ul>
+</div>
+
+<footer>
+  数据维度与原版《竞品拉踩统计.xlsx》对齐：发布平台 / 对应车型 / 触发竞品 / 媒体名称 / 账号粉丝量 / 原文链接 / 发布时间 / 互动数据量 / 目前处理进度 &nbsp;·&nbsp;
+  <span style="color:#10b981">★</span> 绿底行为微博跨平台参考线索 &nbsp;·&nbsp;
+  由小红书MCP实时搜索生成 · 2026-05-28
+</footer>
+
+</body>
+</html>
